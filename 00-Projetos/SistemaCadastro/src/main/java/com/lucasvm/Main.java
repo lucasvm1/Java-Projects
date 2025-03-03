@@ -10,15 +10,12 @@ public class Main {
 
         connection1.connect();
 
-        List<Usuario> usuarios = connection1.listarUsuarios();
+        Usuario usuario = connection1.buscarUsuarioId(7);
 
-        System.out.println("\nLista de Usuários:");
-        if (usuarios.isEmpty()) {
-            System.out.println("Nenhum usuário encontrado.");
+        if (usuario != null) {
+            System.out.println(usuario);
         } else {
-            for (Usuario user : usuarios) {
-                System.out.println(user);
-            }
+            System.out.println("Usuário não encontrado");
         }
 
         connection1.disconnect();

@@ -101,4 +101,43 @@ public class DatabaseConnectionMySQL {
         return usuarios;
 
     }
+
+    public Usuario buscarUsuarioId(int idUsuario) {
+
+        String sql = "select * from usuarios where id = ?";
+
+        try {
+            if (connection == null || connection.isClosed()) {
+                LOGGER.warning("Tentativa de executar SQL sem conexão ativa.");
+                return null;
+            }
+
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+
+                statement.setInt(1, idUsuario);
+
+                try (ResultSet rs = statement.executeQuery()) {
+                    if (rs.next()) {
+                        int id = rs.getInt("id");
+                        String nome = rs.getString("nome");
+                        String email = rs.getString("email");
+                        int idade = rs.getInt("idade");
+
+                        return new Usuario(id, nome, email, idade);
+                    } else {
+                        return null;
+                    }
+                }
+
+
+            }
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Erro ao buscar usuário por ID: " + idUsuario, e);
+            return null;
+        }
+
+
+    }
+
 }
