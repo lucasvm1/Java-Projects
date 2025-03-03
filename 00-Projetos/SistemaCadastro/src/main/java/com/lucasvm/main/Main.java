@@ -9,7 +9,7 @@ public class Main {
 
         connection1.connect();
 
-        connection1.editarUsuario(15, "Lucas", "lucas@email.com", 24 );
+        connection1.inserirUsuario("Lucas", "lucas@email.com", 25);
 
         connection1.disconnect();
     }

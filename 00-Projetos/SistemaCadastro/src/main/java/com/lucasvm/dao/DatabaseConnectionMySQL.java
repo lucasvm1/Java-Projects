@@ -104,6 +104,36 @@ public class DatabaseConnectionMySQL {
 
     }
 
+    public void inserirUsuario(String nome, String email, int idade) {
+
+        String sql = "insert into usuarios (nome, email, idade) values (?, ?, ?)";
+
+        try {
+            if (connection == null || connection.isClosed()) {
+                LOGGER.warning("Tentativa de executar SQL sem conexão ativa.");
+                return;
+            }
+
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+
+                statement.setString(1, nome);
+                statement.setString(2, email);
+                statement.setInt(3, idade);
+
+                int linhasAfetadas = statement.executeUpdate();
+
+                if (linhasAfetadas > 0) {
+                    LOGGER.info("Usuário criado com sucesso!");
+                } else {
+                    LOGGER.warning("Houve um erro ao adicionar o usuário!");
+                }
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public Usuario buscarUsuarioId(int idUsuario) {
 
@@ -143,7 +173,6 @@ public class DatabaseConnectionMySQL {
 
     }
 
-
     public void editarUsuario(int idUsuario, String novoNome, String novoEmail, int novaIdade) {
 
         String sql = "UPDATE USUARIOS SET nome = ?, email = ?, idade = ? WHERE id = ?;";
@@ -176,6 +205,35 @@ public class DatabaseConnectionMySQL {
             LOGGER.log(Level.SEVERE, "Erro ao executar SQL: " + e.getMessage(), e);
         }
 
+
+    }
+
+    public void excluirUsuario(int idUsuario) {
+        String sql = "DELETE FROM USUARIOS WHERE id = ?";
+
+        try {
+            if (connection == null || connection.isClosed()) {
+                LOGGER.warning("Tentativa de executar SQL sem conexão ativa.");
+                return;
+            }
+
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setInt(1, idUsuario);
+
+                int linhasAtualizadas = statement.executeUpdate();
+
+                if (linhasAtualizadas > 0) {
+                    LOGGER.info("Apagado com sucesso!");
+                } else {
+                    LOGGER.warning("Usuário não encontrado!");
+                }
+
+            }
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
