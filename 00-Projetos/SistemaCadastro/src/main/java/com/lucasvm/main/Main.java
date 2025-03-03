@@ -1,4 +1,6 @@
-package com.lucasvm;
+package com.lucasvm.main;
+
+import com.lucasvm.dao.DatabaseConnectionMySQL;
 
 public class Main {
     public static void main(String[] args) {

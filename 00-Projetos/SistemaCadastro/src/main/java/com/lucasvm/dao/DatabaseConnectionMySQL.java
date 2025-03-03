@@ -1,4 +1,6 @@
-package com.lucasvm;
+package com.lucasvm.dao;
+
+import com.lucasvm.models.Usuario;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,6 +1,4 @@
-package com.lucasvm;
-
-import java.util.ArrayList;
+package com.lucasvm.models;
 
 public class Usuario {
 
