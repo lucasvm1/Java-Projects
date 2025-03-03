@@ -102,6 +102,7 @@ public class DatabaseConnectionMySQL {
 
     }
 
+
     public Usuario buscarUsuarioId(int idUsuario) {
 
         String sql = "select * from usuarios where id = ?";
@@ -135,6 +136,42 @@ public class DatabaseConnectionMySQL {
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Erro ao buscar usuário por ID: " + idUsuario, e);
             return null;
+        }
+
+
+    }
+
+
+    public void editarUsuario(int idUsuario, String novoNome, String novoEmail, int novaIdade) {
+
+        String sql = "UPDATE USUARIOS SET nome = ?, email = ?, idade = ? WHERE id = ?;";
+
+        try {
+            if (connection == null || connection.isClosed()) {
+                LOGGER.warning("Tentativa de executar SQL sem conexão ativa.");
+                return;
+            }
+
+
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+
+                statement.setString(1, novoNome);
+                statement.setString(2, novoEmail);
+                statement.setInt(3, novaIdade);
+                statement.setInt(4, idUsuario);
+
+                int linhasAtualizadas = statement.executeUpdate();
+
+                if (linhasAtualizadas > 0) {
+                    LOGGER.info("Atualizado com sucesso!");
+                } else {
+                    LOGGER.warning("Não foi encontrado o usuário!");
+                }
+            }
+
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Erro ao executar SQL: " + e.getMessage(), e);
         }
 
 

@@ -1,8 +1,5 @@
 package com.lucasvm;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) {
 
@@ -10,13 +7,7 @@ public class Main {
 
         connection1.connect();
 
-        Usuario usuario = connection1.buscarUsuarioId(7);
-
-        if (usuario != null) {
-            System.out.println(usuario);
-        } else {
-            System.out.println("Usuário não encontrado");
-        }
+        connection1.editarUsuario(15, "Lucas", "lucas@email.com", 24 );
 
         connection1.disconnect();
     }
