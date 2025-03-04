@@ -14,14 +14,15 @@ public class Main {
         DatabaseConnection connection1 = new DatabaseConnection("localhost", 3306, "mydb", "root", "123456");
         connection1.connect();
 
-        while (opcao != 6) {
-            System.out.println("===== MENU =====");
+        while (opcao != 7) {
+            System.out.println("\n===== MENU =====");
             System.out.println("1 - Cadastrar usuário");
             System.out.println("2 - Listar usuarios");
             System.out.println("3 - Buscar usuario por ID");
             System.out.println("4 - Atualizar usuario");
             System.out.println("5 - Excluir usuario");
-            System.out.println("6 - Sair\n");
+            System.out.println("6 - Transferir saldo");
+            System.out.println("7 - Sair\n");
             System.out.print("Escolha uma opção: ");
             opcao = sc.nextInt();
             System.out.println();
@@ -77,6 +78,20 @@ public class Main {
                     }
                 }
                 case 6 -> {
+                    System.out.println("Digite o ID do pagador: ");
+                    try {
+                        int idOrigem = Integer.parseInt(sc.next());
+                        System.out.println("Digite o ID do recebedor: ");
+                        int idDestino = Integer.parseInt(sc.next());
+                        System.out.println("Digite o valor a ser transferido: ");
+                        double valor = sc.nextDouble();
+
+                        connection1.transferirSaldo(idOrigem, idDestino, valor);
+                    } catch (NumberFormatException e) {
+                        System.out.println("O caractere inserido não foi um número!");
+                    }
+                }
+                case 7 -> {
                     System.out.println("Saindo...");
                 }
                 default -> {
